@@ -1,0 +1,34 @@
+name: fetch
+
+on:
+  schedule:
+    - cron: "30 21 * * *"   # 매일 06:30 KST. 청년 혜택 지도 루틴(08:00 KST)보다 먼저
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch public APIs
+        env:
+          YOUTHCENTER_KEY: ${{ secrets.YOUTHCENTER_KEY }}
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+          SEOUL_KEY: ${{ secrets.SEOUL_KEY }}
+        run: python3 fetch.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "data: $(TZ=Asia/Seoul date +%F) 수집"
+          git push
