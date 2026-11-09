@@ -1,52 +1,52 @@
 {
- "run_at": "2026-11-08T09:50:56+09:00",
+ "run_at": "2026-11-09T10:07:53+09:00",
  "sources": {
   "youthcenter": {
    "desc": "온통청년 청년정책 전체",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 YOUTHCENTER_KEY 없음"
   },
   "gov24": {
    "desc": "보조금24 공공서비스 중 '청년' 포함",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 DATA_GO_KR_KEY 없음"
   },
   "welfare_national": {
    "desc": "중앙부처 복지서비스, 청년 검색",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 DATA_GO_KR_KEY 없음"
   },
   "welfare_local": {
    "desc": "서울 지자체 복지서비스, 청년 검색",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 DATA_GO_KR_KEY 없음"
   },
   "lh_notices": {
    "desc": "LH 분양·임대 공고, 서울",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 DATA_GO_KR_KEY 없음"
   },
   "applyhome": {
    "desc": "청약홈 분양정보, 서울",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 DATA_GO_KR_KEY 없음"
   },
   "seoul_culture": {
    "desc": "서울 문화행사 중 '청년' 포함",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 SEOUL_KEY 없음"
   },
   "seoul_edu": {
    "desc": "서울 공공서비스예약 교육 중 '청년' 포함",
    "state": "no_key",
-   "checked_at": "2026-11-08T09:50:56+09:00",
+   "checked_at": "2026-11-09T10:07:53+09:00",
    "note": "비밀값 SEOUL_KEY 없음"
   }
  }
