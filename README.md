@@ -12,7 +12,7 @@
 
 | 파일 | 내용 | 비밀값 |
 |---|---|---|
-| `youthcenter.json` | 온통청년 청년정책 전체 | `YOUTHCENTER_KEY` |
+| `youthcenter.json` | 온통청년 청년정책 중 서울 거주자가 받을 수 있는 것 (전국 정책 포함, 담당자 이름 뺌) | `YOUTHCENTER_KEY` |
 | `gov24.json` | 보조금24 공공서비스 중 '청년' 포함 | `DATA_GO_KR_KEY` |
 | `welfare_national.json` | 중앙부처 복지서비스, 청년 검색 | `DATA_GO_KR_KEY` |
 | `welfare_local.json` | 서울 지자체 복지서비스, 청년 검색 | `DATA_GO_KR_KEY` |

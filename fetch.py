@@ -54,9 +54,17 @@ def has_youth(d):
 
 # ---------- 출처별 수집 (응답 필드 이름은 키 발급 후 실제 응답으로 확인 필요) ----------
 
+YC_DROP = ("sprvsnInstPicNm", "operInstPicNm")  # 담당 공무원 이름은 공개 저장소에 올리지 않음
+
+
+def yc_seoul(x):
+    """zipCd(법정동 시군구 코드 목록)에 서울(11로 시작)이 있으면 서울 거주자도 받을 수 있는 정책. 전국 정책은 전 지역 코드가 들어 있음"""
+    return any(c.strip().startswith("11") for c in (x.get("zipCd") or "").split(","))
+
+
 def youthcenter(k):
-    out, page = [], 1
-    while page <= 30:
+    out, page, total = [], 1, None
+    while page <= 200:
         u = ("https://www.youthcenter.go.kr/go/ythip/getPlcy?apiKeyNm=" + urllib.parse.quote(k)
              + "&pageNum=%d&pageSize=100&rtnType=json" % page)
         j = json.loads(get(u))
@@ -69,7 +77,11 @@ def youthcenter(k):
         if not rows or len(out) >= total:
             break
         page += 1
-    return out
+    if total and len(out) < total:
+        raise RuntimeError("다 못 받음 : %d / %d건" % (len(out), total))
+    seoul = [{kk: vv for kk, vv in x.items() if kk not in YC_DROP} for x in out if yc_seoul(x)]
+    youthcenter.note = "전국 %d건 중 서울 거주자 대상 %d건만 저장" % (len(out), len(seoul))
+    return seoul
 
 
 def gov24(k):
@@ -150,7 +162,7 @@ def seoul(service):
 
 SOURCES = [
     # 이름, 필요한 비밀값, 수집 함수, 설명
-    ("youthcenter", "YOUTHCENTER_KEY", youthcenter, "온통청년 청년정책 전체"),
+    ("youthcenter", "YOUTHCENTER_KEY", youthcenter, "온통청년 청년정책 중 서울 거주자가 받을 수 있는 것"),
     ("gov24", "DATA_GO_KR_KEY", gov24, "보조금24 공공서비스 중 '청년' 포함"),
     ("welfare_national", "DATA_GO_KR_KEY", welfare_national, "중앙부처 복지서비스, 청년 검색"),
     ("welfare_local", "DATA_GO_KR_KEY", welfare_local, "서울 지자체 복지서비스, 청년 검색"),
@@ -185,6 +197,8 @@ def main():
                 json.dump({"source": name, "desc": desc, "fetched_at": now, "count": len(rows), "items": rows},
                           f, ensure_ascii=False, indent=1)
             status["sources"][name] = {"desc": desc, "state": "ok", "checked_at": now, "fetched_at": now, "count": len(rows)}
+            if getattr(fn, "note", None):
+                status["sources"][name]["note"] = fn.note
             print("ok   %-16s %d" % (name, len(rows)))
         except Exception as e:
             msg = str(e)
